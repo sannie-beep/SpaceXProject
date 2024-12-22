@@ -11,31 +11,46 @@ public class DataDisplayer : MonoBehaviour
     
     public GameObject launchPanelPrefab; // Prefab for launch data display object
     private LaunchDatabase launchesData; // Launch database to be referenced
-    public LaunchDataLoader loader; // Loader which loads data using API
+    public LaunchDataLoader launchLoader; // loads launch data using API
+    public RocketDataLoader rocketLoader; // loads rocket data using API
     public Transform contentPanel; // Panel to instantiate launch data display objects in list form
+    public Dictionary<string, RocketData> rocketDict;
 
 
     // Begin to wait for the data to be accessed and parsed
     void Start()
     {
-        StartCoroutine(WaitForDataAndDisplay());
+        StartCoroutine(WaitForLaunchData());
     }
 
 
-    IEnumerator WaitForDataAndDisplay()
+    IEnumerator WaitForLaunchData()
     {
         // Wait till the get request has finished
-        yield return loader.LoadLaunchData("https://api.spacexdata.com/v5/launches");
+        yield return launchLoader.LoadLaunchData("https://api.spacexdata.com/v5/launches");
 
         // Get the launch data
-        launchesData = loader.getLaunchData();
+        launchesData = launchLoader.getLaunchData();
 
         if (launchesData.launches == null || launchesData.launches.Count == 0)
         {
             Debug.LogError("No launches found in the data!");
         }
-
+        
+        StartCoroutine(WaitForRocketData());
         // Display the launch information
+        //displayLaunchInfo();
+    }
+
+    IEnumerator WaitForRocketData()
+    {
+        // Wait till the get request has finished
+        //yield return WaitForLaunchData();
+        yield return rocketLoader.LoadRocketData("https://api.spacexdata.com/v4/rockets");
+
+        // Get the rocket data into a dict
+        rocketDict = rocketLoader.getRocketDictionary();
+        Debug.Log("Success! :)");
         displayLaunchInfo();
     }
 
@@ -53,11 +68,17 @@ public class DataDisplayer : MonoBehaviour
             // Find Payloads TextMeshProUGUI element in that entry
             TextMeshProUGUI payloadsTMP = newEntry.transform.Find("PayloadsPanel/Payloads")?.GetComponent<TextMeshProUGUI>();
 
+            // Find Rocket TextMeshProUGUI element in that entry
+            TextMeshProUGUI rocketTMP = newEntry.transform.Find("RocketsPanel/Rocket")?.GetComponent<TextMeshProUGUI>();
+
+            // Find Country TextMeshProUGUI element in that entry
+            TextMeshProUGUI countryTMP = newEntry.transform.Find("CountryPanel/Country")?.GetComponent<TextMeshProUGUI>();
+
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
+            setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
         }
-        
 
     }
 
@@ -72,5 +93,13 @@ public class DataDisplayer : MonoBehaviour
     {
         int numPayloads = launchPayloads.Count();
         payloadsTMP.text = Convert.ToString(numPayloads);
+    }
+
+    // Access and display name of rocket
+    void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID)
+    {
+        RocketData thisRocket = this.rocketDict[rocketID];
+        rocketTMP.text = thisRocket.name;
+        countryTMP.text = thisRocket.country;
     }
 }

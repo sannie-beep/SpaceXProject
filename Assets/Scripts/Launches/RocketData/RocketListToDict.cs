@@ -7,12 +7,6 @@ public class RocketListToDict : MonoBehaviour
 {
     Dictionary<string, RocketData> rocketDict;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.rocketDict = ConvertToDict(new RocketDataList());
-    }
-
     // Convert rocket list to dict
     public Dictionary<string, RocketData> ConvertToDict(RocketDataList rocketsList)
     {

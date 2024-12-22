@@ -5,5 +5,5 @@ using System.Collections.Generic;
 [System.Serializable]
 public class RocketDataList
 {
-    public List<RocketData> launches;
+    public List<RocketData> rockets;
 }
