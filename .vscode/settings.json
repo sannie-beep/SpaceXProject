@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SpaceX Project.sln"
+    "dotnet.defaultSolution": "SpaceXProject.sln"
 }
