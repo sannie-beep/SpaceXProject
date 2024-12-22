@@ -9,10 +9,10 @@ using UnityEngine;
 public class DataDisplayer : MonoBehaviour
 {
     
-    public GameObject launchPanel; // Prefab for launch data display object
-
+    public GameObject launchPanelPrefab; // Prefab for launch data display object
     private LaunchDatabase launchesData; // Launch database to be referenced
     public LaunchDataLoader loader; // Loader which loads data using API
+    public Transform contentPanel; // Panel to instantiate launch data display objects in list form
 
 
     // Begin to wait for the data to be accessed and parsed
@@ -43,29 +43,34 @@ public class DataDisplayer : MonoBehaviour
 
     void displayLaunchInfo()
     {     
-    // Find Name TextMeshProUGUI
-    TextMeshProUGUI nameTMP = launchPanel.transform.Find("NamePanel/Name")?.GetComponent<TextMeshProUGUI>();
+        foreach (var launch in launchesData.launches) {
+            // Instantiate a new entry to list of launches
+            GameObject newEntry = Instantiate(launchPanelPrefab, contentPanel.transform);
 
-    // Find Payloads TextMeshProUGUI
-    TextMeshProUGUI payloadsTMP = launchPanel.transform.Find("PayloadsPanel/Payloads")?.GetComponent<TextMeshProUGUI>();
+            // Find Name TextMeshProUGUI element in that entry
+            TextMeshProUGUI nameTMP = newEntry.transform.Find("NamePanel/Name")?.GetComponent<TextMeshProUGUI>();
 
-    // Set data
-    setName(nameTMP);
-    setPayloads(payloadsTMP);
+            // Find Payloads TextMeshProUGUI element in that entry
+            TextMeshProUGUI payloadsTMP = newEntry.transform.Find("PayloadsPanel/Payloads")?.GetComponent<TextMeshProUGUI>();
+
+            // Set data
+            setName(nameTMP, launch.name);
+            setPayloads(payloadsTMP, launch.payloads);
+        }
+        
 
     }
 
     // Access and display launch name
-    void setName(TextMeshProUGUI nameTMP)
+    void setName(TextMeshProUGUI nameTMP, String launchName)
     {
-        nameTMP.text = launchesData.launches[5].name;
+        nameTMP.text = launchName;
     }
     
     // Access and display number of payloads
-    void setPayloads(TextMeshProUGUI payloadsTMP)
+    void setPayloads(TextMeshProUGUI payloadsTMP, String[] launchPayloads)
     {
-        String[] payLoadsList = launchesData.launches[5].payloads;
-        int numPayloads = payLoadsList.Count();
+        int numPayloads = launchPayloads.Count();
         payloadsTMP.text = Convert.ToString(numPayloads);
     }
 }
