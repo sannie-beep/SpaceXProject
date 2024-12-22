@@ -25,7 +25,7 @@ public class DataDisplayer : MonoBehaviour
     IEnumerator WaitForDataAndDisplay()
     {
         // Wait till the get request has finished
-        yield return loader.LoadLaunchData("https://api.spacexdata.com/v4/launches");
+        yield return loader.LoadLaunchData("https://api.spacexdata.com/v5/launches");
 
         // Get the launch data
         launchesData = loader.getLaunchData();

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 [System.Serializable]
-public class LaunchDatabase
+public class RocketDataList
 {
-    public List<LaunchData> launches;
+    public List<RocketData> launches;
 }
