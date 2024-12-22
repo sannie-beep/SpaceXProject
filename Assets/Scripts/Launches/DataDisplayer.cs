@@ -58,7 +58,7 @@ public class DataDisplayer : MonoBehaviour
     // Access and display launch name
     void setName(TextMeshProUGUI nameTMP)
     {
-        nameTMP.text += launchesData.launches[5].name;
+        nameTMP.text = launchesData.launches[5].name;
     }
     
     // Access and display number of payloads
@@ -66,6 +66,6 @@ public class DataDisplayer : MonoBehaviour
     {
         String[] payLoadsList = launchesData.launches[5].payloads;
         int numPayloads = payLoadsList.Count();
-        payloadsTMP.text += Convert.ToString(numPayloads);
+        payloadsTMP.text = Convert.ToString(numPayloads);
     }
 }
