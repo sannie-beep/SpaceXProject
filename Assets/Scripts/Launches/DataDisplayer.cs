@@ -74,10 +74,15 @@ public class DataDisplayer : MonoBehaviour
             // Find Country TextMeshProUGUI element in that entry
             TextMeshProUGUI countryTMP = newEntry.transform.Find("CountryPanel/Country")?.GetComponent<TextMeshProUGUI>();
 
+            // Find Status Image element in that entry
+            //Image statusImg = newEntry.transform.Find("StatusPanel/Img")?.GetComponent<Image>();
+            TextMeshProUGUI statusTMP = newEntry.transform.Find("StatusPanel/Status")?.GetComponent<TextMeshProUGUI>();
+
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
             setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
+            setLaunchStatus(launch.date_utc, statusTMP);
         }
 
     }
@@ -95,11 +100,33 @@ public class DataDisplayer : MonoBehaviour
         payloadsTMP.text = Convert.ToString(numPayloads);
     }
 
-    // Access and display name of rocket
+    // Access and display name of rocket and country
     void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID)
     {
         RocketData thisRocket = this.rocketDict[rocketID];
         rocketTMP.text = thisRocket.name;
         countryTMP.text = thisRocket.country;
+    }
+
+    // Access date of launch and display status image if passed or not
+    void setLaunchStatus(string givenDateUTC, TextMeshProUGUI statusTMP)
+    {
+
+        DateTime launchDate = DateTime.Parse(givenDateUTC, null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+         // Get the current date and time in UTC
+        DateTime currentDate = DateTime.UtcNow;
+
+        // Compare the dates
+        if (launchDate < currentDate)
+        {
+            
+            statusTMP.text = "LAUNCHED" + "\n" +"on" + launchDate;
+        }
+        else
+        {
+            statusTMP.text = "UPCOMING" + "\n" +"on" + launchDate;
+        }
+
     }
 }
