@@ -94,10 +94,12 @@ public class DataDisplayer : MonoBehaviour
             Image statusImg = newEntry.transform.Find("StatusPanel")?.GetComponent<Image>();
             //TextMeshProUGUI statusTMP = newEntry.transform.Find("StatusPanel/Status")?.GetComponent<TextMeshProUGUI>();
 
+            ShipsInLaunch shipsComponent = newEntry.transform.GetComponent<ShipsInLaunch>();
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
-            setRocketAndCountry(rocketTMP, countryTMP, launch.rocket, launch.ships);
+            setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
+            setShips(shipsComponent, launch.ships);
             setLaunchStatus(launch.date_utc, statusImg);
         }
 
@@ -117,24 +119,28 @@ public class DataDisplayer : MonoBehaviour
     }
 
     // Access and display name of rocket and country
-    void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID, String[] shipIDs)
+    void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID)
     {
         RocketData thisRocket = this.rocketDict[rocketID];
+        
+        
+        rocketTMP.text = thisRocket.name;
+        countryTMP.text = thisRocket.country;
+    }
+
+    // Access shipID and store that in ShipID component of each LaunchInfoPanel
+    void setShips(ShipsInLaunch launchShips, String[] shipIDs){
         if (shipIDs != null || shipIDs.Length != 0)
         {
             foreach (var shipID in shipIDs)
             {
                 ShipData thisShip = this.shipDict[shipID];
-                String shipName = thisShip.name;
-                Debug.Log(shipName);
+                launchShips.addOneShip(thisShip);
             }
         }
         else {
             Debug.Log("No ships in this launch");
-        }
-        
-        rocketTMP.text = thisRocket.name;
-        countryTMP.text = thisRocket.country;
+        }    
     }
 
     // Access date of launch and display status image if passed or not
