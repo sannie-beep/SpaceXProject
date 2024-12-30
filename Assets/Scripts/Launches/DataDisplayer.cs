@@ -16,10 +16,12 @@ public class DataDisplayer : MonoBehaviour
     public RocketDataLoader rocketLoader; // loads rocket data using API
     public Transform contentPanel; // Panel to instantiate launch data display objects in list form
     public Dictionary<string, RocketData> rocketDict;
+    public Dictionary<string, ShipData> shipDict;
 
     public Sprite launchedImage; // Sprite to display already launched
 
     public Sprite pendingImage; // Sprite to display launch pending
+
 
 
     // Begin to wait for the data to be accessed and parsed
@@ -50,11 +52,20 @@ public class DataDisplayer : MonoBehaviour
     IEnumerator WaitForRocketData()
     {
         // Wait till the get request has finished
-        //yield return WaitForLaunchData();
-        yield return rocketLoader.LoadRocketData("https://api.spacexdata.com/v4/rockets");
+        yield return rocketLoader.LoadData("https://api.spacexdata.com/v4/rockets", "Rocket");
 
         // Get the rocket data into a dict
         rocketDict = rocketLoader.getRocketDictionary();
+        Debug.Log("Success! :)");
+        StartCoroutine(WaitForShipData());
+    }
+
+    IEnumerator WaitForShipData()
+    {
+     yield return rocketLoader.LoadData("https://api.spacexdata.com/v4/ships", "Ship");
+
+        // Get the rocket data into a dict
+        shipDict = rocketLoader.getShipDictionary();
         Debug.Log("Success! :)");
         displayLaunchInfo();
     }
@@ -86,7 +97,7 @@ public class DataDisplayer : MonoBehaviour
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
-            setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
+            setRocketAndCountry(rocketTMP, countryTMP, launch.rocket, launch.ships);
             setLaunchStatus(launch.date_utc, statusImg);
         }
 
@@ -106,9 +117,22 @@ public class DataDisplayer : MonoBehaviour
     }
 
     // Access and display name of rocket and country
-    void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID)
+    void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID, String[] shipIDs)
     {
         RocketData thisRocket = this.rocketDict[rocketID];
+        if (shipIDs != null || shipIDs.Length != 0)
+        {
+            foreach (var shipID in shipIDs)
+            {
+                ShipData thisShip = this.shipDict[shipID];
+                String shipName = thisShip.name;
+                Debug.Log(shipName);
+            }
+        }
+        else {
+            Debug.Log("No ships in this launch");
+        }
+        
         rocketTMP.text = thisRocket.name;
         countryTMP.text = thisRocket.country;
     }

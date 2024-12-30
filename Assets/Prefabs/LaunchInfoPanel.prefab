@@ -32,9 +32,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7622058583976586158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 679.7224, y: -36.5}
   m_SizeDelta: {x: 123.58, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4607590430364529828
@@ -242,9 +242,9 @@ RectTransform:
   - {fileID: 5625750286838518683}
   m_Father: {fileID: 7622058583976586158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 367.56448, y: -36.5}
   m_SizeDelta: {x: 161.835, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2334522058598369442
@@ -318,9 +318,9 @@ RectTransform:
   - {fileID: 5011372475220752100}
   m_Father: {fileID: 7622058583976586158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 533.2072, y: -36.5}
   m_SizeDelta: {x: 160.3481, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1665723477361792554
@@ -662,9 +662,9 @@ RectTransform:
   - {fileID: 6447857375349784913}
   m_Father: {fileID: 7622058583976586158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 219.57277, y: -36.5}
   m_SizeDelta: {x: 125.046, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8294468177204246353
@@ -851,6 +851,7 @@ GameObject:
   - component: {fileID: 5275922574686379753}
   - component: {fileID: 3518057974052000761}
   - component: {fileID: 7311545140564511448}
+  - component: {fileID: 8389756818313863956}
   m_Layer: 5
   m_Name: LaunchInfoPanel
   m_TagString: Untagged
@@ -946,6 +947,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8389756818313863956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969144353253713370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37931c16d6f80ba4ebd303e2141072da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8495159840873813150
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,9 +992,9 @@ RectTransform:
   - {fileID: 807765406303527616}
   m_Father: {fileID: 7622058583976586158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 81.63709, y: -36.5}
   m_SizeDelta: {x: 141.723, y: 63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &699200548167462141
