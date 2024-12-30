@@ -17,10 +17,8 @@ public class LaunchDataLoader : MonoBehaviour
         // If request is successful
         if (launchDataJson.result == UnityWebRequest.Result.Success){
 
-            // Save as json in resources folder (in case needed)
+            // Get the jsonData
             string jsonData = launchDataJson.downloadHandler.text;
-            string filePath = Path.Combine(Application.dataPath, "Resources/LaunchData.json");
-            File.WriteAllText(filePath, jsonData);
             
             // Parse json data into LaunchDatabase object
             ParseLaunchData(jsonData);
