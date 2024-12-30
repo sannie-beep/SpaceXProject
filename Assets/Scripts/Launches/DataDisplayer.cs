@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DataDisplayer : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class DataDisplayer : MonoBehaviour
     public RocketDataLoader rocketLoader; // loads rocket data using API
     public Transform contentPanel; // Panel to instantiate launch data display objects in list form
     public Dictionary<string, RocketData> rocketDict;
+
+    public Sprite launchedImage; // Sprite to display already launched
+
+    public Sprite pendingImage; // Sprite to display launch pending
 
 
     // Begin to wait for the data to be accessed and parsed
@@ -62,7 +67,7 @@ public class DataDisplayer : MonoBehaviour
             // Instantiate a new entry to list of launches
             GameObject newEntry = Instantiate(launchPanelPrefab, contentPanel.transform);
 
-            // Find Name TextMeshProUGUI element in that entry
+            // Find Name TextMeshProUGUI element in that entry (expensive in terms of memory and time)
             TextMeshProUGUI nameTMP = newEntry.transform.Find("NamePanel/Name")?.GetComponent<TextMeshProUGUI>();
 
             // Find Payloads TextMeshProUGUI element in that entry
@@ -75,14 +80,14 @@ public class DataDisplayer : MonoBehaviour
             TextMeshProUGUI countryTMP = newEntry.transform.Find("CountryPanel/Country")?.GetComponent<TextMeshProUGUI>();
 
             // Find Status Image element in that entry
-            //Image statusImg = newEntry.transform.Find("StatusPanel/Img")?.GetComponent<Image>();
-            TextMeshProUGUI statusTMP = newEntry.transform.Find("StatusPanel/Status")?.GetComponent<TextMeshProUGUI>();
+            Image statusImg = newEntry.transform.Find("StatusPanel")?.GetComponent<Image>();
+            //TextMeshProUGUI statusTMP = newEntry.transform.Find("StatusPanel/Status")?.GetComponent<TextMeshProUGUI>();
 
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
             setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
-            setLaunchStatus(launch.date_utc, statusTMP);
+            setLaunchStatus(launch.date_utc, statusImg);
         }
 
     }
@@ -109,7 +114,7 @@ public class DataDisplayer : MonoBehaviour
     }
 
     // Access date of launch and display status image if passed or not
-    void setLaunchStatus(string givenDateUTC, TextMeshProUGUI statusTMP)
+    void setLaunchStatus(string givenDateUTC, Image statusIMG)
     {
 
         DateTime launchDate = DateTime.Parse(givenDateUTC, null, System.Globalization.DateTimeStyles.RoundtripKind);
@@ -121,11 +126,15 @@ public class DataDisplayer : MonoBehaviour
         if (launchDate < currentDate)
         {
             
-            statusTMP.text = "LAUNCHED" + "\n" +"on" + launchDate;
+            statusIMG.sprite = this.launchedImage;
+            statusIMG.color = new Color(151,190,195,242);
+            //"LAUNCHED" + "\n" +"on" + launchDate;
         }
         else
         {
-            statusTMP.text = "UPCOMING" + "\n" +"on" + launchDate;
+            statusIMG.sprite = this.pendingImage;
+            //"UPCOMING" + "\n" +"on" + launchDate;
+            statusIMG.color = new Color(151,190,195,242);
         }
 
     }
