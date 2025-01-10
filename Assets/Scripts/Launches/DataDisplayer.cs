@@ -16,10 +16,14 @@ public class DataDisplayer : MonoBehaviour
     public RocketDataLoader rocketLoader; // loads rocket data using API
     public Transform contentPanel; // Panel to instantiate launch data display objects in list form
     public Dictionary<string, RocketData> rocketDict;
+    public Dictionary<string, ShipData> shipDict;
 
     public Sprite launchedImage; // Sprite to display already launched
 
     public Sprite pendingImage; // Sprite to display launch pending
+
+    public GameObject shipInfoDisplay; // Panel that shows the ship's info
+
 
 
     // Begin to wait for the data to be accessed and parsed
@@ -50,11 +54,20 @@ public class DataDisplayer : MonoBehaviour
     IEnumerator WaitForRocketData()
     {
         // Wait till the get request has finished
-        //yield return WaitForLaunchData();
-        yield return rocketLoader.LoadRocketData("https://api.spacexdata.com/v4/rockets");
+        yield return rocketLoader.LoadData("https://api.spacexdata.com/v4/rockets", "Rocket");
 
         // Get the rocket data into a dict
         rocketDict = rocketLoader.getRocketDictionary();
+        Debug.Log("Success! :)");
+        StartCoroutine(WaitForShipData());
+    }
+
+    IEnumerator WaitForShipData()
+    {
+     yield return rocketLoader.LoadData("https://api.spacexdata.com/v4/ships", "Ship");
+
+        // Get the rocket data into a dict
+        shipDict = rocketLoader.getShipDictionary();
         Debug.Log("Success! :)");
         displayLaunchInfo();
     }
@@ -66,6 +79,8 @@ public class DataDisplayer : MonoBehaviour
         foreach (var launch in launchesData.launches) {
             // Instantiate a new entry to list of launches
             GameObject newEntry = Instantiate(launchPanelPrefab, contentPanel.transform);
+
+            newEntry.GetComponent<ButtonHandler>().infoArea = this.shipInfoDisplay;
 
             // Find Name TextMeshProUGUI element in that entry (expensive in terms of memory and time)
             TextMeshProUGUI nameTMP = newEntry.transform.Find("NamePanel/Name")?.GetComponent<TextMeshProUGUI>();
@@ -83,10 +98,12 @@ public class DataDisplayer : MonoBehaviour
             Image statusImg = newEntry.transform.Find("StatusPanel")?.GetComponent<Image>();
             //TextMeshProUGUI statusTMP = newEntry.transform.Find("StatusPanel/Status")?.GetComponent<TextMeshProUGUI>();
 
+            ShipsInLaunch shipsComponent = newEntry.transform.GetComponent<ShipsInLaunch>();
             // Set data
             setName(nameTMP, launch.name);
             setPayloads(payloadsTMP, launch.payloads);
             setRocketAndCountry(rocketTMP, countryTMP, launch.rocket);
+            setShips(shipsComponent, launch.ships);
             setLaunchStatus(launch.date_utc, statusImg);
         }
 
@@ -109,8 +126,25 @@ public class DataDisplayer : MonoBehaviour
     void setRocketAndCountry(TextMeshProUGUI rocketTMP, TextMeshProUGUI countryTMP, String rocketID)
     {
         RocketData thisRocket = this.rocketDict[rocketID];
+        
+        
         rocketTMP.text = thisRocket.name;
         countryTMP.text = thisRocket.country;
+    }
+
+    // Access shipID and store that in ShipID component of each LaunchInfoPanel
+    void setShips(ShipsInLaunch launchShips, String[] shipIDs){
+        if (shipIDs != null || shipIDs.Length != 0)
+        {
+            foreach (var shipID in shipIDs)
+            {
+                ShipData thisShip = this.shipDict[shipID];
+                launchShips.addOneShip(thisShip);
+            }
+        }
+        else {
+            Debug.Log("No ships in this launch");
+        }    
     }
 
     // Access date of launch and display status image if passed or not
