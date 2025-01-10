@@ -22,8 +22,28 @@ public class ShipsInLaunch : MonoBehaviour
         if (this.shipsInLaunch != null){
             return this.shipsInLaunch;
         }
-        else {return null;}
+        else {return new List<ShipData>();}
         
+    }
+
+    public String getShipInfoToDisplay(int index)
+    {
+        if (index > this.shipsInLaunch.Count)
+        {
+            return null;
+        }
+        ShipData ship = this.shipsInLaunch[index];
+        String name = ship.name;
+        String numMissions = ship.launches.Count.ToString();
+        String type = ship.type;
+        String homePort = ship.home_port;
+
+        String display = "Name: " + name + "\n" + 
+                            "Missions: " + numMissions + "\n" + 
+                                "Type: " + type + "\n" + 
+                                    "Home Port: " + homePort;
+
+        return display;
     }
 
 }

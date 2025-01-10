@@ -22,6 +22,8 @@ public class DataDisplayer : MonoBehaviour
 
     public Sprite pendingImage; // Sprite to display launch pending
 
+    public GameObject shipInfoDisplay; // Panel that shows the ship's info
+
 
 
     // Begin to wait for the data to be accessed and parsed
@@ -77,6 +79,8 @@ public class DataDisplayer : MonoBehaviour
         foreach (var launch in launchesData.launches) {
             // Instantiate a new entry to list of launches
             GameObject newEntry = Instantiate(launchPanelPrefab, contentPanel.transform);
+
+            newEntry.GetComponent<ButtonHandler>().infoArea = this.shipInfoDisplay;
 
             // Find Name TextMeshProUGUI element in that entry (expensive in terms of memory and time)
             TextMeshProUGUI nameTMP = newEntry.transform.Find("NamePanel/Name")?.GetComponent<TextMeshProUGUI>();

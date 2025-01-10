@@ -8,6 +8,7 @@ public class ShipPanelDisplayer : MonoBehaviour
     public GameObject ShipInfo;
     // Start is called before the first frame update
     public GameObject parentPanel;
+    public GameObject shipInfoDetails;
 
     void Start()
     {
@@ -20,8 +21,7 @@ public class ShipPanelDisplayer : MonoBehaviour
         ShipsInLaunch ships = parentPanel.GetComponentInChildren<ShipsInLaunch>();
         if (ships != null)
         {
-            if (ships.getShipsInLaunch().Count < 1){
-                
+            if (ships.getShipsInLaunch().Count == 0){
             }
         }
 

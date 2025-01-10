@@ -673,37 +673,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4594704201158523705
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2774383708663767817}
-  m_Layer: 0
-  m_Name: ButtonController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2774383708663767817
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4594704201158523705}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 135.2937, y: -46.398987, z: 1.6729721}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7622058583976586158}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6086513670966428364
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +897,7 @@ GameObject:
   - component: {fileID: 7311545140564511448}
   - component: {fileID: 6106988935156689670}
   - component: {fileID: 7625334063539444222}
+  - component: {fileID: 7470032936941114057}
   m_Layer: 5
   m_Name: LaunchInfoPanel
   m_TagString: Untagged
@@ -953,13 +923,12 @@ RectTransform:
   - {fileID: 3734154094537421716}
   - {fileID: 4068079529419531508}
   - {fileID: 4791634515112504906}
-  - {fileID: 2774383708663767817}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 277.29395, y: 0}
-  m_SizeDelta: {x: 752.288, y: 71.936}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5275922574686379753
 CanvasRenderer:
@@ -1093,6 +1062,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7470032936941114057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969144353253713370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f682adbc3971014fb6b0c4b973a164f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoArea: {fileID: 0}
 --- !u!1 &8495159840873813150
 GameObject:
   m_ObjectHideFlags: 0
